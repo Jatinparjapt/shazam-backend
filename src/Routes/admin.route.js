@@ -2,7 +2,7 @@ const express = require("express");
 const routes = express.Router();
 
 // Import the necessary controller functions
-const { addSongApi, addArtist, adminOTPVerify, adminCreate } = require("../Controllers/admin.api.js");
+const { addSongApi,deleteSong,deleteArtist, addArtist, adminOTPVerify, adminCreate } = require("../Controllers/admin.api.js");
 
 // Route for creating a new admin
 // Endpoint: POST /create
@@ -24,4 +24,13 @@ routes.post("/addsong", addSongApi);
 // Description: Adds a new artist to the database. Requires a valid admin key.
 routes.post("/addartist", addArtist);
 
+// Route for delete a  artist
+// Endpoint: POST /deleteartist
+// Description: delete a  artist from the database. Requires a valid admin key.
+routes.post("/deleteartist",deleteArtist )
+
+// Route for delete a  song
+// Endpoint: POST /deletesong
+// Description: delete a  songs from the database. Requires a valid admin key.
+routes.post("/deletesong",deleteSong )
 module.exports = routes;

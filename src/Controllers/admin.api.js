@@ -5,10 +5,11 @@ const nodemailer = require("nodemailer");
 // const axios = require('axios');
 // const artistModel = require("../Models/artist.model.js");
 const songModel = require("../Models/songs.model.js");
+const artistModel = require("../Models/artist.model.js");
 
 // API endpoint to add a new song
 const addSongApi = async (req, res) => {
-    const { adminkey, name, artist, image, audioLink, openInAppLink, goToArtist } = req.body;
+    const { adminkey, name,sId,artistId, artist, image, audioLink, openInAppLink, goToArtist } = req.body;
 
     try {
         // Validate admin using the provided secret key
@@ -31,6 +32,8 @@ const addSongApi = async (req, res) => {
         // Create and save a new song document
         const song = new songModel({
             name,
+            sId,
+            artistId,
             artist,
             image,
             audioLink,
@@ -139,7 +142,7 @@ const adminCreate = async (req, res) => {
 
         // Send the email
         await transporter.sendMail(mailOptions);
-        return res.status(200).json({ message: 'Reset link sent to your email' });
+        return res.status(200).json({ message: 'Verfication code  sent to your email' });
 
     } catch (error) {
         // Log and return an error response in case of failure
@@ -209,6 +212,41 @@ const adminOTPVerify = async (req, res) => {
         return res.status(500).json({ message: "Internal Server Error", error: error.message });
     }
 };
+const deleteSong = async (req ,res )=>{
+    const {adminkey, id } = req.body
+      // Validate admin using the provided secret key
+      const validateAdmin = await adminModel.findOne({ secretKey: adminkey });
+      if (!validateAdmin) {
+          return res.status(401).json({ message: "Unauthorized Access 🤦‍♀️🥲🤦‍♂️" });
+      }
+      // Verify that the provided admin key is correct and the admin is registered
+      const verifyAdminKey = validateAdmin.secretKey === adminkey;
+      if(verifyAdminKey){
+        const findSong = await songModel.findOne({sId: id})
+        if(findSong){
+         await songModel.deleteOne({sId: findSong.sId})
+         return res.status(200).json({message: "Delete Song Successfully "})
+        }
+      }
+}
 
+
+const deleteArtist = async (req ,res )=>{
+    const {adminkey, id } = req.body
+      // Validate admin using the provided secret key
+      const validateAdmin = await adminModel.findOne({ secretKey: adminkey });
+      if (!validateAdmin) {
+          return res.status(401).json({ message: "Unauthorized Access 🤦‍♀️🥲🤦‍♂️" });
+      }
+      // Verify that the provided admin key is correct and the admin is registered
+      const verifyAdminKey = validateAdmin.secretKey === adminkey;
+      if(verifyAdminKey){
+        const findArtist = await artistModel.findOne({artistId: id})
+        if(findArtist){
+         await artistModel.deleteOne({artistId: findArtist.artistId})
+         return res.status(200).json({message: "Delete Song Successfully "})
+        }
+      }
+}
 // Export the API endpoint functions
-module.exports = { addSongApi, adminCreate, addArtist, adminOTPVerify };
+module.exports = { addSongApi, adminCreate, addArtist, adminOTPVerify ,deleteSong,deleteArtist };

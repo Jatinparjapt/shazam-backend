@@ -7,7 +7,7 @@ const artists = async (req, res) => {
     try {
         // Retrieve all artist documents from the database
         const data = await artistModel.find();
-        console.log(data, " data"); // Log the fetched data for debugging
+        // console.log(data, " data"); // Log the fetched data for debugging
         // Return a success response with the retrieved data
         return res.status(200).json({ message: "Data fetched successfully 😉", response: data });
     } catch (error) {

@@ -27,12 +27,13 @@ const loginUser = async (req, res) => {
           message: "User Login Successfully 😎",
           token: tokenJwt,
           name: getUser.name,
+          email:getUser.email
         });
       }
     } else {
       return res.status(401).json({ error: "Invalid Credentials 🥲" });
     }
-  } catch (error) {
+  } catch (error) { 
     return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
@@ -41,7 +42,7 @@ const loginUser = async (req, res) => {
 const registerUser = async (req, res) => {
   // Destructure email, password, and name from request body
   const { email, password, name } = req.body;
-
+//  console.log( req.body, "name")
   // Check if all required fields are provided
   if (!name || !password || !email) {
     return res.status(400).json({ message: "All fields are mandatory" });
@@ -80,10 +81,11 @@ const registerUser = async (req, res) => {
 const forgetPassword = async (req, res) => {
   // Destructure email from request body
   const { email } = req.body;
+  // console.log(email, " forget")
 
   // Check if email is provided
   if (!email) {
-    return res.status(400).json({ message: "All fields are mandatory" });
+    return res.status(404).json({ message: "All fields are mandatory" });
   }
 
   try {
@@ -146,12 +148,11 @@ const resetPassword = async (req, res) => {
     if (!password) {
       return res.status(400).json({ message: "All fields are mandatory" });
     }
-
     // Clear the reset token and expiry date
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
     // Update the user's password
-    user.password = await bcryptjs.hash(password, 10); // Hash the new password
+   // Hash the new password
     await user.save();
 
     return res.status(200).json({ message: 'Password has been updated' });
