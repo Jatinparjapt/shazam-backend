@@ -53,6 +53,8 @@ Request Body (JSON):
 ```json
 {
   "adminkey": "<admin-key>",
+ "sId" : "<songid>",
+"artistId" : "<artistic>",
   "name": "<song-name>",
   "artist": "<artist-name>",
   "image": "<image-url>",
