@@ -1,37 +1,36 @@
-const express = require("express")
-const app = express()
-const cors = require("cors")
-const connection = require("./src/connection/connect.db")
-const routes = require("./src/Routes/user.route.js")
-const adminRoutes = require("./src/Routes/admin.route.js")
-// config
-require("dotenv").config()
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const connection = require("./src/connection/connect.db");
+const routes = require("./src/Routes/user.route.js");
+const adminRoutes = require("./src/Routes/admin.route.js");
 
-// middleware
-app.use(express.json())
-app.use(cors())
+// Load environment variables
+require("dotenv").config();
 
+// Middleware
+app.use(express.json()); // Parses incoming JSON requests
+app.use(cors()); // Enables Cross-Origin Resource Sharing
 
-// routes , api routes 
-app.use("/api",routes)
-// admin routes
-app.use("/admin",adminRoutes)
-// home route, default route
+// API routes
+app.use("/api", routes); // Routes for user-related endpoints
+app.use("/admin", adminRoutes); // Routes for admin-related endpoints
 
+// Home route
+app.get("/", (req, res) => {
+    res.status(200).send({ message: "Home page" });
+});
 
+// Port
+const PORT = process.env.PORT || 8000;
 
-
-
-app.get("/", (req, res)=>{
-    res.status(200).send({message: " home page"})
-})
-
-// Port 
-const PORT  = process.env.PORT || 8000
-
-// listing sever 
+// Connect to database and start server
 connection()
-app.listen(PORT , ()=>{
-    console.log(`Server start listing on port ${PORT}`)
-})
-
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.error("Failed to connect to the database:", err);
+    });
