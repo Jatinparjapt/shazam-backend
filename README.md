@@ -19,9 +19,9 @@ Request Body (JSON):
 
 Response:
 
-200 OK on success
-400 for validation errors
-409 if email already exists
+**200 OK on success**
+**400 for validation errors**
+**409 if email already exists**
 
 ## Verify Admin OTP
 
@@ -39,9 +39,9 @@ Request Body (JSON):
 
 Response:
 
-200 OK on success
-400 if OTP is invalid or expired
-404 if admin not found
+**200 OK on success**
+**400 if OTP is invalid or expired**
+**404 if admin not found**
 
 ## Add Song
 
@@ -64,9 +64,9 @@ Request Body (JSON):
 
 Response:
 
-201 Created on success
-401 for unauthorized access
-400 if any field is missing
+**201 Created on success**
+**401 for unauthorized access**
+**400 if any field is missing**
 
 ## Add Artist
 
@@ -88,9 +88,9 @@ Request Body (JSON):
 
 Response:
 
-200 OK on success
-401 for unauthorized access
-400 if any field is missing
+**200 OK on success**
+**401 for unauthorized access**
+**400 if any field is missing**
 
 # User Routes
 
@@ -110,9 +110,9 @@ Request Body (JSON):
 
 Response:
 
-200 OK with JWT token on success
-401 for invalid credentials
-400 if fields are missing
+**200 OK with JWT token on success**
+**401 for invalid credentials**
+**400 if fields are missing**
 
 ## User Signup
 
@@ -131,9 +131,9 @@ Request Body (JSON):
 
 Response:
 
-201 Created on success
-409 if email already exists
-400 if fields are missing
+**201 Created on success**
+**409 if email already exists**
+**400 if fields are missing**
 
 ## Forget Password
 
@@ -150,9 +150,9 @@ Request Body (JSON):
 
 Response:
 
-200 OK on success
-400 if user not found
-400 if email field is missing
+**200 OK on success**
+**400 if user not found**
+**400 if email field is missing**
 
 ## Reset Password
 
@@ -169,9 +169,9 @@ Request Body (JSON):
 
 Response:
 
-200 OK on success
-400 if token is invalid or expired
-400 if password field is missing
+**200 OK on success**
+**400 if token is invalid or expired**
+**400 if password field is missing**
 
 # Artist Routes
 
@@ -182,8 +182,8 @@ Endpoint: /user/artists
 
 Response:
 
-200 OK with list of artists
-500 for server errors
+**200 OK with list of artists**
+**500 for server errors**
 
 ## Get Artist by ID
 
@@ -192,8 +192,8 @@ Endpoint: /user/artist/:artistId
 
 ## Response:
 
-200 OK with artist details and top 10 songs
-404 if artist not found
+**200 OK with artist details and top 10 songs**
+**404 if artist not found**
 
 # Song Routes
 
@@ -206,8 +206,8 @@ Endpoint: /user/songs
 
 ## Response:
 
-200 OK with list of songs
-404 if no songs found
+**200 OK with list of songs**
+**404 if no songs found**
 
 ## Get Song by ID
 
@@ -216,15 +216,15 @@ Endpoint: /user/song/:songId
 
 Response:
 
-200 OK with song details
-404 if song not found
+**200 OK with song details**
+**404 if song not found**
 
 ## Usage
 
 Start the server
 
 ```bash
-npm start
+node index.js
 ```
 
 The server will be running at http://localhost:<PORT>, where <PORT> is defined in your .env file.
