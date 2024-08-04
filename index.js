@@ -4,6 +4,7 @@ const cors = require("cors")
 const connection = require("./src/connection/connect.db")
 const routes = require("./src/Routes/user.route.js")
 const adminRoutes = require("./src/Routes/admin.route.js")
+const artists = require("./src/Controllers/artist.api.js")
 // config
 require("dotenv").config()
 
@@ -22,9 +23,7 @@ app.use("/admin",adminRoutes)
 
 
 
-app.get("/", (req, res)=>{
-    res.status(200).send({message: " home page"})
-})
+app.get("/", artists)
 
 // Port 
 const PORT  = process.env.PORT || 8000
